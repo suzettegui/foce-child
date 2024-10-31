@@ -4,40 +4,40 @@
  Author: Studio Koukaki
  Author URI: https://www.koukaki.local
  Template: foce
- Description: Thème enfant à l'ocasion de la nomination aux Oscars Shorts
+ Description: Thème enfant à l'occasion de la nomination aux Oscars Shorts
  Version: 0.1
  */
- 
+
  .nomination-section {
     position: relative;
-    display: flex;                
-    align-items: center;          
-    justify-content: center;     
-    flex-wrap: wrap;              
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
     text-align: center;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .section-title {
     background-image: url('./assets/images/Rectangle23.png');
-    background-size: contain;  
-    font-family: Quicksand;   
-    background-position: center;  /* Centre l'image de fond */
-    font-size: 42px;
+    background-size: contain;
+    font-family: Quicksand;
+    background-position: center;
+    font-size: 40px;
     color: white;
     display: inline-block;
     margin-top: 100px;
 }
-/* Ajout des fleurs avec :before et :after */
+
 .nomination-section::before {
-    content: url('./assets/images/Sunflower.png'); /* L'image Sunflower */
+    content: url('./assets/images/Sunflower.png');
     position: absolute;
-    left: 11em; /* Même position que dans le footer */
+    left: 11em;
     top: 0em;
 }
 
 .nomination-section::after {
-    content: url('./assets/images/orchid.png'); /* L'image Orchid */
+    content: url('./assets/images/orchid.png');
     position: absolute;
     right: -4em;
     bottom: 12em;
@@ -47,14 +47,12 @@
     margin-top: 100px;
 }
 
-.site-footer::before  {
+.site-footer::before,
+.site-footer::after {
     display: none;
 }
 
-.site-footer::after{
-    display: none;
-}
-
+/* Animation de rotation pour les fleurs */
 @keyframes fleurTourne {
     0% {
         transform: rotate(0deg);
@@ -64,77 +62,130 @@
     }
 }
 
-.nomination-section::before, 
-.nomination-section::after {
-    animation: fleurTourne 20s linear infinite; /* Durée 20s, linéaire et en boucle */
-    transform-origin: center; /* S'assure que la rotation se fait depuis le centre */
-}
-ul::after {
-    animation: fleurTourne 30s linear infinite; /* Durée 30s pour une rotation plus lente */
-    transform-origin: center; /* Rotation depuis le centre */
-}
-#studio h2::before  {
-    animation: fleurTourne 30s linear infinite; /* Durée 30s pour une rotation plus lente */
-    transform-origin: center; /* Rotation depuis le centre */
-
-}
-h2::after {
-    animation: fleurTourne 30s linear infinite; /* Durée 30s pour une rotation plus lente */
-    transform-origin: center; /* Rotation depuis le centre */
-}
-
+.nomination-section::before,
+.nomination-section::after,
+ul::after,
+#studio h2::before,
+h2::after,
 .story__article::after {
-    animation: fleurTourne 30s linear infinite; /* Durée 30s pour une rotation plus lente */
-    transform-origin: center; /* Rotation depuis le centre */
+    animation: fleurTourne 30s linear infinite;
+    transform-origin: center;
 }
 
-
-
-/* Animation d'apparition avec un léger déplacement */
-@keyframes fadeInTitle {
-    0% {
-        opacity: 0;
-        transform: translateY(5px); /* Légère translation pour déclencher l'animation */
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0); /* Position finale */
-    }
-}
-
-/* Style de base des titres h2 et h3 avant l'animation */
-h2, h3 {
-    opacity: 0; /* Titres invisibles au départ */
-    transition: opacity 1s ease-out, transform 1s ease-out; /* Transition fluide pour le fade-in */
-    will-change: opacity, transform; /* Optimise le rendu */
-}
-
-/* Appliquer l'animation lorsque le titre devient visible */
-h2.visible, h3.visible {
-    opacity: 1;
-    animation: fadeInTitle 1s ease-out forwards; /* Animation d'apparition */
-}
-
-/* Animation fade-in pour les sections qui montent */
+/* Animation fade-in pour les sections */
 @keyframes fadeInUp {
     0% {
         opacity: 0;
-        transform: translateY(50px); /* Monte depuis le bas */
+        transform: translateY(50px);
     }
     100% {
         opacity: 1;
-        transform: translateY(0); /* Se stabilise */
+        transform: translateY(0);
     }
 }
 
-/* Animation fade-in pour les sections qui descendent */
 @keyframes fadeInDown {
     0% {
         opacity: 0;
-        transform: translateY(-50px); /* Descend depuis le haut */
+        transform: translateY(-50px);
     }
     100% {
         opacity: 1;
-        transform: translateY(0); /* Se stabilise */
+        transform: translateY(0);
     }
 }
+
+/* Appliquer les animations aux sections avec un délai */
+.story,
+#studio,
+.nomination-section {
+    opacity: 0;
+    animation: fadeInUp 2.5s ease-out forwards;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.banner {
+    opacity: 0;
+    animation: fadeInDown 2.5s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+
+/* Animation pour le texte des titres */
+@keyframes fadeInUpTitle {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Le span est initialement invisible */
+h2 span, h3 span {
+    opacity: 0;
+    display: inline-block;
+    transform: translateY(30px); /* Départ en bas */
+}
+
+/* Classe qui déclenche l'animation sur le span */
+.title-visible {
+    animation: fadeInUpTitle 1.5s ease-out forwards;
+}
+
+
+/* Style pour le logo flottant */
+.floating-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    z-index: 2;
+    pointer-events: none;
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Animation de flottement */
+@keyframes float {
+    0% {
+        transform: translate(-50%, -50%) translateY(0px);
+    }
+    50% {
+        transform: translate(-50%, -50%) translateY(-20px);
+    }
+    100% {
+        transform: translate(-50%, -50%) translateY(0px);
+    }
+}
+
+/* Style de la bannière et vidéo */
+.banner {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
